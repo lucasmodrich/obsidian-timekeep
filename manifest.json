@@ -1,10 +1,10 @@
 {
-	"id": "timekeep",
-	"name": "Timekeep",
-	"version": "1.10.0",
+	"id": "timekeep-lm",
+	"name": "Timekeep-lm",
+	"version": "1.10.0"-lm,
 	"minAppVersion": "1.5.12",
-	"description": "Time tracking",
-	"author": "Jacobtread",
+	"description": "Time tracking (LM)",
+	"author": "Jacobtread (LM)",
 	"authorUrl": "https://jacobtread.com",
 	"fundingUrl": "https://www.buymeacoffee.com/jacobtread",
 	"isDesktopOnly": false
