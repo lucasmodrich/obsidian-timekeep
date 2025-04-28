@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useStore } from "@/store";
-import { formatTimestamp } from "@/utils";
+import { formatTimestamp, roundMomentToMinute } from "@/utils";
 import React, { useMemo, useState, FormEvent } from "react";
 import { useSettings } from "@/contexts/use-settings-context";
 import { useTimekeepStore } from "@/contexts/use-timekeep-store";
@@ -37,7 +37,8 @@ export default function TimekeepStart() {
 		event.stopPropagation();
 
 		store.setState((timekeep) => {
-			const currentTime = moment();
+			//const currentTime = moment();
+			const currentTime = roundMomentToMinute(moment(), settings);
 			let entries = timekeep.entries;
 
 			// Stop any already running entries
@@ -63,7 +64,8 @@ export default function TimekeepStart() {
 		event.stopPropagation();
 
 		store.setState((timekeep) => {
-			const currentTime = moment();
+			//const currentTime = moment();
+			const currentTime = roundMomentToMinute(moment(), settings);
 
 			return {
 				...timekeep,
