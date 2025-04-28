@@ -141,3 +141,28 @@ export function formatPdfRowDate(
 ): string {
 	return value.format(settings.pdfRowDateFormat);
 }
+
+
+/**
+ * Rounds the provided timestamp to the specified interval
+ *
+ * @param value The moment value to format
+ * @param settings The settings
+ * @returns The rounded timestamp
+ */
+export function roundMomentToMinute(
+	value: Moment,
+	settings: TimekeepSettings
+): Moment {
+    if (settings.timestampRoundTo > 0) {
+		// Round to nearest configurable interval using moment's built-in rounding
+		const roundTo = settings.timestampRoundTo;
+    	const intervals = Math.round(value.minutes() / roundTo) * roundTo;
+    	return value
+			.minutes(intervals)
+			.seconds(0)
+			.milliseconds(0);
+	} else {
+		return value;
+	}
+} 

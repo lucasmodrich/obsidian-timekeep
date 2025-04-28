@@ -11,6 +11,7 @@ import {
 	formatDurationDecimal,
 	parseEditableTimestamp,
 	formatEditableTimestamp,
+	roundMomentToMinute
 } from "./time";
 
 it("should format time", () => {
@@ -164,4 +165,41 @@ describe("format pdf row date", () => {
 			expect(output).toBe(expected);
 		}
 	);
+});
+
+
+it("should round input moment to nearest 15min", () => {
+	const input =  moment("2024-03-31 02:10:00", "YYYY-MM-DD HH:mm:ss");
+	const expected = moment("2024-03-31 02:15:00", "YYYY-MM-DD HH:mm:ss");
+
+	const settings: TimekeepSettings = defaultSettings;
+	settings.timestampRoundTo = 15;
+
+	const output = roundMomentToMinute(input, settings);
+
+	expect(output.toDate()).toStrictEqual(expected.toDate());
+});
+
+it("should round input moment to nearest 15min", () => {
+	const input =  moment("2024-03-31 02:17:00", "YYYY-MM-DD HH:mm:ss");
+	const expected = moment("2024-03-31 02:15:00", "YYYY-MM-DD HH:mm:ss");
+
+	const settings: TimekeepSettings = defaultSettings;
+	settings.timestampRoundTo = 15;
+
+	const output = roundMomentToMinute(input, settings);
+
+	expect(output.toDate()).toStrictEqual(expected.toDate());
+});
+
+it("should not round input moment when rounding configured to zero", () => {
+	const input =  moment("2024-03-31 02:10:00", "YYYY-MM-DD HH:mm:ss");
+	const expected = moment("2024-03-31 02:10:00", "YYYY-MM-DD HH:mm:ss");
+
+	const settings: TimekeepSettings = defaultSettings;
+	settings.timestampRoundTo = 0;
+
+	const output = roundMomentToMinute(input, settings);
+
+	expect(output.toDate()).toStrictEqual(expected.toDate());
 });
