@@ -16,7 +16,10 @@ import {
 	stopRunningEntries,
 } from "@/timekeep";
 
-import { formatTimestamp } from "src/utils";
+import { 
+	formatTimestamp,
+	roundMomentToMinute
+ } from "src/utils";
 
 import ObsidianIcon from "./ObsidianIcon";
 import TimekeepName from "./TimekeepName";
@@ -44,7 +47,9 @@ export default function TimesheetRow({ entry, indent }: Props) {
 
 	const onClickStart = () => {
 		timekeepStore.setState((timekeep) => {
-			const currentTime = moment();
+			//const currentTime = moment();
+
+			const currentTime = roundMomentToMinute(moment(), settings);
 
 			let entries = timekeep.entries;
 
