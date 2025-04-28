@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-timekeep",
-	"version": "1.10.0",
+	"name": "obsidian-timekeep-lm",
+	"version": "1.10.0-lm",
 	"description": "Obsidian plugin for time tracking",
 	"main": "main.js",
 	"scripts": {
@@ -12,7 +12,7 @@
 		"test": "jest --coverage"
 	},
 	"keywords": [],
-	"author": "Jacobtread",
+	"author": "Jacobtread-lm",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/jest": "^29.5.12",

@@ -53,6 +53,9 @@ export interface TimekeepSettings {
 	exportDurationFormat: DurationFormat;
 	formatCopiedJSON: boolean;
 
+	timestampRoundTo: number;
+    timestampPreventEndSameAsStart: boolean;
+
 	sortOrder: SortOrder;
 	unstartedOrder: UnstartedOrder;
 }
@@ -72,6 +75,9 @@ export const defaultSettings: TimekeepSettings = {
 	showDecimalHours: true,
 	exportDurationFormat: DurationFormat.SHORT,
 	formatCopiedJSON: false,
+
+	timestampRoundTo: 0,
+    timestampPreventEndSameAsStart: false,
 
 	sortOrder: SortOrder.INSERTION,
 	unstartedOrder: UnstartedOrder.LAST,

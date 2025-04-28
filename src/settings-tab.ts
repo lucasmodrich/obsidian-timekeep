@@ -317,5 +317,31 @@ export class TimekeepSettingsTab extends PluginSettingTab {
 					}));
 				});
 			});
+
+		new Setting(this.containerEl)
+            .setName("Timestamp Rounding Interval (minutes)")
+            .setDesc("The interval (minutes) that start and end timestamps should be rounded to. Set to 0 for no rounding (default behaviour).")
+            .addText((t) => {
+                t.setValue(String(settings.timestampRoundTo));
+                t.onChange((v) => {
+                    this.settingsStore.setState((currentValue) => ({
+                        ...currentValue,
+                        timestampRoundTo: v.length ? parseInt(v) : 0,
+                    }));
+                });
+            });
+
+        new Setting(this.containerEl)
+            .setName("Prevent Same Start and End Times")
+            .setDesc("Whether the start and end timestamp are allowed to be the same")
+            .addToggle((t) => {
+                t.setValue(settings.timestampPreventEndSameAsStart);
+                t.onChange((v) => {
+                    this.settingsStore.setState((currentValue) => ({
+						...currentValue,
+						timestampPreventEndSameAsStart: v,	
+					}));
+				});
+			});
 	}
 }
