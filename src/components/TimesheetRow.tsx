@@ -56,7 +56,7 @@ export default function TimesheetRow({ entry, indent }: Props) {
 			// Stop any already running entries
 			if (isKeepRunning(timekeep)) {
 				// Stop the running entry
-				entries = stopRunningEntries(entries, currentTime);
+				entries = stopRunningEntries(entries, currentTime, settings);
 			}
 
 			if (entry.subEntries !== null || entry.startTime !== null) {

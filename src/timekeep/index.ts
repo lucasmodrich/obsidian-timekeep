@@ -88,15 +88,26 @@ export function setEntryCollapsed(
  */
 export function stopRunningEntries(
 	entries: TimeEntry[],
-	endTime: Moment
+	endTime: Moment,
+	settings: TimekeepSettings
 ): TimeEntry[] {
 	return entries.map((entry) => {
 		// Stop the sub entries
 		if (entry.subEntries) {
 			return {
 				...entry,
-				subEntries: stopRunningEntries(entry.subEntries, endTime),
+				subEntries: stopRunningEntries(entry.subEntries, endTime, settings),
 			};
+		}
+
+		if (settings.timestampPreventEndSameAsStart) {
+			if (settings.timestampRoundTo > 0) {
+				// Prevent the end time from being the same as the start time by 
+				// adding the timestamp round to the end time
+				if (entry.startTime?.isSame(endTime)) {
+					endTime = endTime.add(settings.timestampRoundTo, "minute");
+				}
+			}
 		}
 
 		// Ignore already stopped entries and entries that aren't started

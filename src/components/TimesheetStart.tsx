@@ -44,7 +44,7 @@ export default function TimekeepStart() {
 			// Stop any already running entries
 			if (isKeepRunning(timekeep)) {
 				// Stop the running entry
-				entries = stopRunningEntries(entries, currentTime);
+				entries = stopRunningEntries(entries, currentTime, settings);
 			}
 
 			/// Clear the name input
@@ -69,7 +69,7 @@ export default function TimekeepStart() {
 
 			return {
 				...timekeep,
-				entries: stopRunningEntries(timekeep.entries, currentTime),
+				entries: stopRunningEntries(timekeep.entries, currentTime, settings),
 			};
 		});
 	};
