@@ -1,7 +1,7 @@
 {
 	"id": "timekeep-lm",
 	"name": "Timekeep-lm",
-	"version": "1.10.0"-lm,
+	"version": "1.10.1-lm",
 	"minAppVersion": "1.5.12",
 	"description": "Time tracking (LM)",
 	"author": "Jacobtread (LM)",

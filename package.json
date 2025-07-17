@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-timekeep-lm",
-	"version": "1.10.0-lm",
-	"description": "Obsidian plugin for time tracking",
+	"version": "1.10.1-lm",
+	"description": "Obsidian plugin for time tracking (LM)",
 	"main": "main.js",
 	"scripts": {
 		"dev": "obsidian-plugin dev --esbuild-config=esbuild.config.js --vault-path=test-vault --with-stylesheet src/styles.css src/main.ts",
