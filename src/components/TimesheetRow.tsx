@@ -7,13 +7,10 @@ import TimesheetRowEditing from "@/components/TimesheetRowEditing";
 import TimesheetRowDuration from "@/components/TimesheetRowDuration";
 import {
 	updateEntry,
-	createEntry,
-	withSubEntry,
-	isKeepRunning,
 	isEntryRunning,
 	getRunningEntry,
 	setEntryCollapsed,
-	stopRunningEntries,
+	startNewNestedEntry,
 } from "@/timekeep";
 
 import { 
@@ -35,45 +32,29 @@ export default function TimesheetRow({ entry, indent }: Props) {
 
 	const [editing, setEditing] = useState(false);
 
-	const { isSelfRunning, isRunningWithin } = useMemo(() => {
+	const { isSelfRunning, isRunningWithin, isInvalidEntry } = useMemo(() => {
 		const isSelfRunning =
 			entry.subEntries === null && isEntryRunning(entry);
 		const isRunningWithin =
 			entry.subEntries !== null &&
 			getRunningEntry(entry.subEntries) !== null;
 
-		return { isSelfRunning, isRunningWithin };
+		const isInvalidEntry =
+			entry.startTime !== null &&
+			entry.endTime !== null &&
+			entry.endTime.isBefore(entry.startTime);
+
+		return { isSelfRunning, isRunningWithin, isInvalidEntry };
 	}, [entry]);
 
 	const onClickStart = () => {
 		timekeepStore.setState((timekeep) => {
-			//const currentTime = moment();
-
-			const currentTime = roundMomentToMinute(moment(), settings);
-
-			let entries = timekeep.entries;
-
-			// Stop any already running entries
-			if (isKeepRunning(timekeep)) {
-				// Stop the running entry
-				entries = stopRunningEntries(entries, currentTime, settings);
-			}
-
-			if (entry.subEntries !== null || entry.startTime !== null) {
-				// If the entry has been started or is a group create a new child entry
-				entries = updateEntry(
-					entries,
-					entry,
-					withSubEntry(entry, "", currentTime)
-				);
-			} else {
-				// If the entry hasn't been started then start it
-				entries = updateEntry(
-					entries,
-					entry,
-					createEntry(entry.name, currentTime)
-				);
-			}
+			const currentTime = moment();
+			const entries = startNewNestedEntry(
+				roundMomentToMinute(moment(), settings),
+				entry.id,
+				timekeep.entries
+			);
 
 			return {
 				...timekeep,
@@ -88,7 +69,7 @@ export default function TimesheetRow({ entry, indent }: Props) {
 
 		timekeepStore.setState((timekeep) => {
 			const newEntry = setEntryCollapsed(entry, !entry.collapsed);
-			const entries = updateEntry(timekeep.entries, entry, newEntry);
+			const entries = updateEntry(timekeep.entries, entry.id, newEntry);
 			return { ...timekeep, entries };
 		});
 	};
@@ -107,7 +88,8 @@ export default function TimesheetRow({ entry, indent }: Props) {
 			className="timekeep-row"
 			data-running={isSelfRunning}
 			data-running-within={isRunningWithin}
-			data-sub-entires={entry.subEntries !== null}>
+			data-sub-entires={entry.subEntries !== null}
+			data-invalid={isInvalidEntry}>
 			<td
 				className="timekeep-col timekeep-col--name"
 				style={{ paddingLeft: `${(indent + 1) * 15}px` }}>
