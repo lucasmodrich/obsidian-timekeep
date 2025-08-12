@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-timekeep-lm",
-	"version": "1.13.0-lm",
+	"version": "1.13.1-lm",
 	"description": "Obsidian plugin for time tracking (LM)",
 	"main": "main.js",
 	"scripts": {

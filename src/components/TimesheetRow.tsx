@@ -49,9 +49,9 @@ export default function TimesheetRow({ entry, indent }: Props) {
 
 	const onClickStart = () => {
 		timekeepStore.setState((timekeep) => {
-			const currentTime = moment();
+			const currentTime = roundMomentToMinute(moment(), settings);
 			const entries = startNewNestedEntry(
-				roundMomentToMinute(moment(), settings),
+				currentTime,
 				entry.id,
 				timekeep.entries
 			);
